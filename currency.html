@@ -3,15 +3,185 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Деталі валюти</title>
+    <title>Деталі валюти — Валютник</title>
+    <meta
+      name="description"
+      content="Інформація про валюту, графік зміни курсу за тиждень, місяць, квартал і рік та статистика: мінімум, максимум, середнє значення."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Валютник" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:title" content="Деталі валюти — Валютник" />
+    <meta
+      property="og:description"
+      content="Графік курсу валюти та статистика за обраний період."
+    />
   </head>
+
   <body>
-    <h1>Деталі валюти</h1>
-    <nav>
-      <a href="./index.html">Конвертер</a>
-      <a href="./rates.html">Курси</a>
-      <a href="./currency.html?code=USD">Деталі USD</a>
-    </nav>
+    <a class="skip-link" href="#main">Перейти до основного вмісту</a>
+
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="logo" href="./index.html">
+          <svg class="logo__icon" aria-hidden="true" viewBox="0 0 64 64" width="32" height="32">
+            <rect width="64" height="64" rx="14" fill="currentColor" />
+            <path
+              d="M18 24h26l-6-6M46 40H20l6 6"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo__text">Валютник</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Основна навігація">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="./index.html">Конвертер</a></li>
+            <li><a class="main-nav__link" href="./rates.html">Курси валют</a></li>
+          </ul>
+        </nav>
+
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+          <span class="visually-hidden">Темна тема</span>
+          <svg
+            class="theme-toggle__icon"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="container" tabindex="-1">
+      <nav class="breadcrumbs" aria-label="Хлібні крихти">
+        <ol class="breadcrumbs__list">
+          <li><a href="./rates.html">Курси валют</a></li>
+          <li><span id="crumb-current" aria-current="page">Валюта</span></li>
+        </ol>
+      </nav>
+
+      <div class="status" id="page-status" role="status" aria-live="polite"></div>
+
+      <article class="currency" id="currency-article" aria-labelledby="currency-title">
+        <header class="currency__header">
+          <span class="currency__symbol" id="currency-symbol" aria-hidden="true"></span>
+          <div class="currency__heading">
+            <h1 id="currency-title">Деталі валюти</h1>
+            <p class="currency__subtitle" id="currency-subtitle"></p>
+          </div>
+          <button type="button" class="btn btn--ghost fav-btn" id="fav-btn" aria-pressed="false">
+            Додати в обране
+          </button>
+        </header>
+
+        <dl class="facts card">
+          <div class="facts__item">
+            <dt>Код ISO 4217</dt>
+            <dd id="fact-code">—</dd>
+          </div>
+          <div class="facts__item">
+            <dt>Цифровий код</dt>
+            <dd id="fact-numeric">—</dd>
+          </div>
+          <div class="facts__item">
+            <dt>Символ</dt>
+            <dd id="fact-symbol">—</dd>
+          </div>
+          <div class="facts__item">
+            <dt>Дані доступні з</dt>
+            <dd id="fact-since">—</dd>
+          </div>
+        </dl>
+
+        <section class="chart-section card" aria-labelledby="chart-title">
+          <div class="section-header">
+            <h2 id="chart-title">Динаміка курсу</h2>
+            <div class="segmented" role="group" aria-label="Період графіка">
+              <button type="button" class="segmented__btn" data-period="7" aria-pressed="false">
+                7 днів
+              </button>
+              <button type="button" class="segmented__btn" data-period="30" aria-pressed="true">
+                30 днів
+              </button>
+              <button type="button" class="segmented__btn" data-period="90" aria-pressed="false">
+                90 днів
+              </button>
+              <button type="button" class="segmented__btn" data-period="365" aria-pressed="false">
+                Рік
+              </button>
+            </div>
+          </div>
+
+          <figure class="chart">
+            <div class="chart__canvas" id="chart">
+              <!-- SVG-графік малює JavaScript -->
+            </div>
+            <figcaption class="chart__caption" id="chart-caption"></figcaption>
+          </figure>
+        </section>
+
+        <section class="stats-section" aria-labelledby="stats-title">
+          <h2 id="stats-title">Статистика за період</h2>
+          <dl class="stats">
+            <div class="stats__item card">
+              <dt>Мінімум</dt>
+              <dd id="stat-min">—</dd>
+            </div>
+            <div class="stats__item card">
+              <dt>Максимум</dt>
+              <dd id="stat-max">—</dd>
+            </div>
+            <div class="stats__item card">
+              <dt>Середнє</dt>
+              <dd id="stat-avg">—</dd>
+            </div>
+            <div class="stats__item card">
+              <dt>Зміна</dt>
+              <dd id="stat-change">—</dd>
+            </div>
+          </dl>
+        </section>
+
+        <a class="btn btn--primary" id="convert-link" href="./index.html">
+          Конвертувати цю валюту
+        </a>
+      </article>
+
+      <noscript>
+        <p class="status status--error">Для роботи сторінки потрібно увімкнути JavaScript.</p>
+      </noscript>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p>
+          Дані:
+          <a href="https://frankfurter.dev/">Frankfurter API</a>. Курси мають довідковий характер.
+        </p>
+        <p>
+          © 2026 Валютник · Навчальний проєкт ·
+          <a href="https://github.com/nxkttg/currency-converter">Код на GitHub</a>
+        </p>
+      </div>
+    </footer>
+
     <script type="module" src="/src/pages/currency.ts"></script>
   </body>
 </html>

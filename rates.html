@@ -3,15 +3,168 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Курси валют</title>
+    <title>Курси валют сьогодні — Валютник</title>
+    <meta
+      name="description"
+      content="Таблиця актуальних курсів понад 200 валют світу з пошуком, фільтрами та сортуванням. Оберіть базову валюту та додавайте валюти в обране."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Валютник" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:title" content="Курси валют сьогодні — Валютник" />
+    <meta
+      property="og:description"
+      content="Таблиця курсів понад 200 валют з пошуком, фільтрами та сортуванням."
+    />
   </head>
+
   <body>
-    <h1>Курси валют</h1>
-    <nav>
-      <a href="./index.html">Конвертер</a>
-      <a href="./rates.html">Курси</a>
-      <a href="./currency.html?code=USD">Деталі USD</a>
-    </nav>
+    <a class="skip-link" href="#main">Перейти до основного вмісту</a>
+
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="logo" href="./index.html">
+          <svg class="logo__icon" aria-hidden="true" viewBox="0 0 64 64" width="32" height="32">
+            <rect width="64" height="64" rx="14" fill="currentColor" />
+            <path
+              d="M18 24h26l-6-6M46 40H20l6 6"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo__text">Валютник</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Основна навігація">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="./index.html">Конвертер</a></li>
+            <li>
+              <a class="main-nav__link" href="./rates.html" aria-current="page">Курси валют</a>
+            </li>
+          </ul>
+        </nav>
+
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+          <span class="visually-hidden">Темна тема</span>
+          <svg
+            class="theme-toggle__icon"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="container" tabindex="-1">
+      <h1>Курси валют</h1>
+      <p class="lead">
+        Скільки коштує одна одиниця кожної валюти. Оберіть базову валюту, знайдіть потрібну та
+        відсортуйте таблицю.
+      </p>
+
+      <form
+        class="toolbar card"
+        id="rates-controls"
+        role="search"
+        aria-label="Пошук і фільтрація валют"
+      >
+        <div class="field">
+          <label class="field__label" for="base">Базова валюта</label>
+          <select class="field__input" id="base" name="base">
+            <option value="UAH">UAH — українська гривня</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="search">Пошук</label>
+          <input
+            class="field__input"
+            id="search"
+            name="search"
+            type="search"
+            placeholder="Наприклад: USD або долар"
+            autocomplete="off"
+          />
+        </div>
+
+        <fieldset class="filter">
+          <legend class="field__label">Показати</legend>
+          <div class="segmented">
+            <input type="radio" id="filter-all" name="filter" value="all" checked />
+            <label for="filter-all">Усі</label>
+            <input type="radio" id="filter-favorites" name="filter" value="favorites" />
+            <label for="filter-favorites">Обрані</label>
+            <input type="radio" id="filter-metals" name="filter" value="metals" />
+            <label for="filter-metals">Метали</label>
+          </div>
+        </fieldset>
+      </form>
+
+      <p class="rates-summary" id="rates-summary" role="status" aria-live="polite"></p>
+
+      <div class="table-wrapper card">
+        <table class="rates-table" id="rates-table">
+          <caption id="rates-caption">
+            Курси валют
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col"><span class="visually-hidden">Обране</span></th>
+              <th scope="col" aria-sort="ascending">
+                <button type="button" class="sort-btn" data-sort="code">Код</button>
+              </th>
+              <th scope="col" aria-sort="none">
+                <button type="button" class="sort-btn" data-sort="name">Назва</button>
+              </th>
+              <th scope="col" aria-sort="none" class="num">
+                <button type="button" class="sort-btn" data-sort="rate">Курс</button>
+              </th>
+            </tr>
+          </thead>
+          <tbody id="rates-body">
+            <!-- Рядки створює JavaScript -->
+          </tbody>
+        </table>
+      </div>
+
+      <p class="empty-state" id="rates-empty" hidden>
+        Нічого не знайдено. Спробуйте змінити пошуковий запит або фільтр.
+      </p>
+
+      <noscript>
+        <p class="status status--error">Для роботи таблиці потрібно увімкнути JavaScript.</p>
+      </noscript>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p>
+          Дані:
+          <a href="https://frankfurter.dev/">Frankfurter API</a>. Курси мають довідковий характер.
+        </p>
+        <p>
+          © 2026 Валютник · Навчальний проєкт ·
+          <a href="https://github.com/nxkttg/currency-converter">Код на GitHub</a>
+        </p>
+      </div>
+    </footer>
+
     <script type="module" src="/src/pages/rates.ts"></script>
   </body>
 </html>

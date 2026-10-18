@@ -3,15 +3,172 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Конвертер валют</title>
+    <title>Конвертер валют онлайн — Валютник</title>
+    <meta
+      name="description"
+      content="Безкоштовний конвертер валют з актуальними курсами понад 200 валют світу, включно з гривнею. Популярні курси та історія конвертацій."
+    />
+    <meta name="theme-color" content="#0f766e" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Open Graph: як виглядатиме посилання в соцмережах і месенджерах -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Валютник" />
+    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:title" content="Конвертер валют онлайн — Валютник" />
+    <meta
+      property="og:description"
+      content="Актуальні курси понад 200 валют світу, включно з гривнею."
+    />
   </head>
+
   <body>
-    <h1>Конвертер</h1>
-    <nav>
-      <a href="./index.html">Конвертер</a>
-      <a href="./rates.html">Курси</a>
-      <a href="./currency.html?code=USD">Деталі USD</a>
-    </nav>
+    <!-- Посилання для користувачів клавіатури: дозволяє пропустити меню -->
+    <a class="skip-link" href="#main">Перейти до основного вмісту</a>
+
+    <header class="site-header">
+      <div class="container site-header__inner">
+        <a class="logo" href="./index.html">
+          <svg class="logo__icon" aria-hidden="true" viewBox="0 0 64 64" width="32" height="32">
+            <rect width="64" height="64" rx="14" fill="currentColor" />
+            <path
+              d="M18 24h26l-6-6M46 40H20l6 6"
+              fill="none"
+              stroke="#ffffff"
+              stroke-width="5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="logo__text">Валютник</span>
+        </a>
+
+        <nav class="main-nav" aria-label="Основна навігація">
+          <ul class="main-nav__list">
+            <li><a class="main-nav__link" href="./index.html" aria-current="page">Конвертер</a></li>
+            <li><a class="main-nav__link" href="./rates.html">Курси валют</a></li>
+          </ul>
+        </nav>
+
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+          <span class="visually-hidden">Темна тема</span>
+          <svg
+            class="theme-toggle__icon"
+            aria-hidden="true"
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+          >
+            <path
+              d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="container" tabindex="-1">
+      <section class="hero" aria-labelledby="page-title">
+        <h1 id="page-title">Конвертер валют</h1>
+        <p class="lead">
+          Актуальні курси понад 200 валют світу, включно з гривнею. Дані оновлюються щодня.
+        </p>
+
+        <form class="converter card" id="converter-form" novalidate>
+          <div class="field converter__amount">
+            <label class="field__label" for="amount">Сума</label>
+            <input
+              class="field__input"
+              id="amount"
+              name="amount"
+              type="text"
+              inputmode="decimal"
+              autocomplete="off"
+              value="100"
+              required
+              aria-describedby="amount-error"
+            />
+            <p class="field__error" id="amount-error" hidden></p>
+          </div>
+
+          <div class="field">
+            <label class="field__label" for="from">З валюти</label>
+            <select class="field__input" id="from" name="from">
+              <option value="USD">USD — долар США</option>
+            </select>
+          </div>
+
+          <button type="button" class="swap-btn" id="swap-btn" aria-label="Поміняти валюти місцями">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="24" height="24">
+              <path
+                d="M7 4 3 8l4 4M3 8h14M17 20l4-4-4-4M21 16H7"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </button>
+
+          <div class="field">
+            <label class="field__label" for="to">У валюту</label>
+            <select class="field__input" id="to" name="to">
+              <option value="UAH">UAH — українська гривня</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn btn--primary converter__submit">Конвертувати</button>
+
+          <div class="converter__result">
+            <output class="converter__value" id="result" for="amount from to"></output>
+            <p class="converter__rate" id="rate-info"></p>
+          </div>
+
+          <div class="status" id="converter-status" role="status" aria-live="polite"></div>
+        </form>
+      </section>
+
+      <section class="popular" aria-labelledby="popular-title">
+        <h2 id="popular-title">Популярні курси до гривні</h2>
+        <ul class="popular__list" id="popular-list">
+          <!-- Картки створює JavaScript -->
+        </ul>
+      </section>
+
+      <section class="history" aria-labelledby="history-title">
+        <div class="section-header">
+          <h2 id="history-title">Історія конвертацій</h2>
+          <button type="button" class="btn btn--ghost" id="history-clear">Очистити</button>
+        </div>
+        <ol class="history__list" id="history-list">
+          <!-- Записи створює JavaScript -->
+        </ol>
+        <p class="empty-state" id="history-empty">Тут з'являться ваші останні конвертації.</p>
+      </section>
+
+      <noscript>
+        <p class="status status--error">Для роботи конвертера потрібно увімкнути JavaScript.</p>
+      </noscript>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container site-footer__inner">
+        <p>
+          Дані:
+          <a href="https://frankfurter.dev/">Frankfurter API</a>. Курси мають довідковий характер.
+        </p>
+        <p>
+          © 2026 Валютник · Навчальний проєкт ·
+          <a href="https://github.com/nxkttg/currency-converter">Код на GitHub</a>
+        </p>
+      </div>
+    </footer>
+
     <script type="module" src="/src/pages/home.ts"></script>
   </body>
 </html>
