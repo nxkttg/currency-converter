@@ -1,0 +1,4 @@
+/* Головний файл стилів. Тут імпортуватимемо всі інші CSS-файли */
+body {
+  font-family: system-ui, sans-serif;
+}
