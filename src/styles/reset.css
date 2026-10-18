@@ -1,0 +1,66 @@
+/* Скидання стандартних стилів браузера, щоб усюди був однаковий старт */
+@layer reset {
+  *,
+  *::before,
+  *::after {
+    /* width включає padding і border — передбачувана блокова модель */
+    box-sizing: border-box;
+  }
+
+  * {
+    margin: 0;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+
+  img,
+  svg {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Поля форм за замовчуванням не успадковують шрифт — виправляємо */
+  input,
+  button,
+  select,
+  textarea {
+    font: inherit;
+    color: inherit;
+  }
+
+  button {
+    cursor: pointer;
+  }
+
+  /* Прибираємо маркери тільки у списків з класом (тобто «технічних») */
+  ul[class],
+  ol[class] {
+    list-style: none;
+    padding: 0;
+  }
+
+  table {
+    border-collapse: collapse;
+  }
+
+  fieldset {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+  }
+
+  /* Доступність: якщо користувач вимкнув анімації в системі */
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}

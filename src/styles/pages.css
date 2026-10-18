@@ -1,0 +1,430 @@
+/* Стилі конкретних сторінок */
+@layer components {
+  /* =============== ГОЛОВНА: конвертер =============== */
+  .hero {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .converter {
+    display: grid;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+    box-shadow: var(--shadow);
+  }
+
+  .converter__amount .field__input {
+    min-height: 3.5rem;
+    font-size: var(--fs-xl);
+    font-weight: 700;
+  }
+
+  .swap-btn {
+    display: grid;
+    place-items: center;
+    justify-self: center;
+    width: var(--control-height);
+    height: var(--control-height);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-primary);
+    transition:
+      background-color var(--transition),
+      transform 300ms ease;
+  }
+
+  /* На телефоні поля одне під одним — стрілки повернуті вертикально */
+  .swap-btn svg {
+    transform: rotate(90deg);
+  }
+
+  .swap-btn:hover {
+    background-color: var(--color-primary-soft);
+    transform: rotate(180deg);
+  }
+
+  .converter__result {
+    padding: var(--space-5);
+    border-radius: var(--radius);
+    background-color: var(--color-primary-soft);
+    text-align: center;
+  }
+
+  .converter__value {
+    display: block;
+    font-size: var(--fs-display);
+    font-weight: 800;
+    line-height: var(--lh-tight);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+  }
+
+  .converter__value:empty::before {
+    content: '—';
+  }
+
+  .converter__rate {
+    margin-top: var(--space-2);
+    color: var(--color-text-muted);
+  }
+
+  /* Ширший екран: розкладка через іменовані області сітки */
+  @media (min-width: 40rem) {
+    .converter {
+      grid-template-columns: 1fr auto 1fr;
+      grid-template-areas:
+        'amount amount amount'
+        'from   swap   to'
+        'submit submit submit'
+        'result result result'
+        'status status status';
+      align-items: end;
+    }
+
+    .converter__amount {
+      grid-area: amount;
+    }
+
+    .converter__from {
+      grid-area: from;
+    }
+
+    .swap-btn {
+      grid-area: swap;
+    }
+
+    .converter__to {
+      grid-area: to;
+    }
+
+    .converter__submit {
+      grid-area: submit;
+    }
+
+    .converter__result {
+      grid-area: result;
+    }
+
+    .converter > .status {
+      grid-area: status;
+    }
+
+    .swap-btn svg {
+      transform: none;
+    }
+  }
+
+  /* Популярні курси: сітка, що сама підбирає кількість колонок */
+  .popular__list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  .rate-card__link {
+    display: grid;
+    gap: var(--space-1);
+    height: 100%;
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+    color: var(--color-text);
+    text-decoration: none;
+    transition:
+      transform var(--transition),
+      box-shadow var(--transition),
+      border-color var(--transition);
+  }
+
+  .rate-card__link:hover {
+    transform: translateY(-2px);
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow);
+    color: var(--color-text);
+  }
+
+  .rate-card__code {
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .rate-card__name {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  .rate-card__value {
+    font-size: var(--fs-xl);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rate-card__change {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  /* Історія конвертацій */
+  .history__list {
+    display: grid;
+    gap: var(--space-2);
+  }
+
+  .history__item {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--space-2) var(--space-4);
+    padding: var(--space-3) var(--space-4);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .history__time {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* =============== КУРСИ: таблиця =============== */
+  .toolbar {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr));
+    gap: var(--space-4);
+    align-items: end;
+  }
+
+  .filter legend {
+    margin-bottom: var(--space-2);
+  }
+
+  .rates-summary {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  /* На вузькому екрані таблиця прокручується горизонтально всередині обгортки */
+  .table-wrapper {
+    padding: 0;
+    overflow-x: auto;
+  }
+
+  .rates-table {
+    width: 100%;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .rates-table caption {
+    padding: var(--space-4) var(--space-5);
+    text-align: start;
+    font-weight: 700;
+  }
+
+  .rates-table th,
+  .rates-table td {
+    padding: var(--space-3) var(--space-4);
+    border-top: 1px solid var(--color-border);
+    text-align: start;
+    white-space: nowrap;
+  }
+
+  .rates-table thead th {
+    background-color: var(--color-surface-2);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  .rates-table tbody tr {
+    transition: background-color var(--transition);
+  }
+
+  .rates-table tbody tr:hover {
+    background-color: var(--color-surface-2);
+  }
+
+  .rates-table td:nth-child(3) {
+    white-space: normal;
+  }
+
+  .sort-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-1);
+    padding: var(--space-1) 0;
+    border: 0;
+    background: none;
+    font-weight: 700;
+    color: inherit;
+  }
+
+  /* Іконка напрямку сортування залежить від атрибута aria-sort */
+  .sort-btn::after {
+    content: '↕';
+    opacity: 0.4;
+  }
+
+  [aria-sort='ascending'] .sort-btn::after {
+    content: '↑';
+    opacity: 1;
+  }
+
+  [aria-sort='descending'] .sort-btn::after {
+    content: '↓';
+    opacity: 1;
+  }
+
+  .code-link {
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .code-link:hover {
+    text-decoration: underline;
+  }
+
+  /* =============== ДЕТАЛІ ВАЛЮТИ =============== */
+  .breadcrumbs__list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  .breadcrumbs__list li + li::before {
+    content: '/';
+    margin-inline-end: var(--space-2);
+  }
+
+  .currency {
+    display: grid;
+    gap: var(--space-6);
+  }
+
+  .currency__header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-4);
+  }
+
+  .currency__symbol {
+    display: grid;
+    place-items: center;
+    width: 4rem;
+    height: 4rem;
+    border-radius: var(--radius);
+    background-color: var(--color-primary-soft);
+    font-size: 1.75rem;
+    font-weight: 800;
+    color: var(--color-primary);
+  }
+
+  .currency__symbol:empty {
+    display: none;
+  }
+
+  .currency__heading {
+    flex: 1 1 16rem;
+  }
+
+  .currency__subtitle {
+    color: var(--color-text-muted);
+  }
+
+  .currency > .btn {
+    justify-self: start;
+  }
+
+  .facts,
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 10rem), 1fr));
+    gap: var(--space-4);
+  }
+
+  .stats {
+    margin-top: var(--space-4);
+  }
+
+  .facts dt,
+  .stats dt {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+
+  .facts dd,
+  .stats dd {
+    font-size: var(--fs-lg);
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Графік */
+  .chart {
+    display: grid;
+    gap: var(--space-3);
+  }
+
+  .chart__canvas {
+    position: relative;
+    height: clamp(14rem, 40vw, 22rem);
+  }
+
+  .chart__canvas svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+
+  .chart__line {
+    fill: none;
+    stroke: var(--color-primary);
+    stroke-width: 2.5;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+  }
+
+  .chart__area {
+    fill: var(--color-primary);
+    opacity: 0.12;
+  }
+
+  .chart__grid {
+    stroke: var(--color-border);
+    stroke-dasharray: 4 4;
+  }
+
+  .chart__label {
+    fill: var(--color-text-muted);
+    font-size: 12px;
+  }
+
+  .chart__dot {
+    fill: var(--color-surface);
+    stroke: var(--color-primary);
+    stroke-width: 2.5;
+  }
+
+  .chart__tooltip {
+    position: absolute;
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-text);
+    color: var(--color-bg);
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    white-space: nowrap;
+    pointer-events: none;
+    transform: translate(-50%, calc(-100% - 12px));
+  }
+
+  .chart__caption {
+    font-size: var(--fs-sm);
+    color: var(--color-text-muted);
+  }
+}

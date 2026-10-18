@@ -1,0 +1,78 @@
+/*
+ * Дизайн-токени: усі «магічні числа» проєкту в одному місці.
+ * light-dark(світла, темна) — браузер обирає значення за поточною темою.
+ */
+@layer tokens {
+  :root {
+    color-scheme: light dark;
+    accent-color: var(--color-primary);
+
+    /* ---------- Кольори ---------- */
+    --color-bg: light-dark(#f6f8fa, #0b1220);
+    --color-surface: light-dark(#ffffff, #111a2e);
+    --color-surface-2: light-dark(#eef2f6, #1a2540);
+    --color-border: light-dark(#d5dde5, #2a3755);
+
+    --color-text: light-dark(#0f172a, #e6edf7);
+    --color-text-muted: light-dark(#475569, #9fb0c8);
+
+    --color-primary: light-dark(#0f766e, #2dd4bf);
+    --color-primary-hover: light-dark(#115e59, #5eead4);
+    --color-primary-soft: light-dark(#ccfbf1, #0f3b3a);
+    --color-on-primary: light-dark(#ffffff, #042f2e);
+
+    --color-accent: light-dark(#b45309, #fbbf24);
+    --color-success: light-dark(#15803d, #4ade80);
+    --color-danger: light-dark(#b91c1c, #f87171);
+    --color-danger-soft: light-dark(#fee2e2, #3b1517);
+    --color-focus: light-dark(#7c3aed, #c4b5fd);
+
+    /* ---------- Типографіка ---------- */
+    --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+
+    --fs-sm: 0.875rem;
+    --fs-base: 1rem;
+    --fs-lg: 1.125rem;
+    /* clamp(мінімум, бажане, максимум) — «гумовий» розмір шрифту */
+    --fs-xl: clamp(1.25rem, 1.1rem + 0.6vw, 1.5rem);
+    --fs-2xl: clamp(1.75rem, 1.3rem + 2vw, 2.75rem);
+    --fs-display: clamp(2rem, 1.4rem + 3vw, 3.25rem);
+
+    --lh-tight: 1.2;
+    --lh-base: 1.6;
+
+    /* ---------- Відступи (шкала кратна 4px) ---------- */
+    --space-1: 0.25rem;
+    --space-2: 0.5rem;
+    --space-3: 0.75rem;
+    --space-4: 1rem;
+    --space-5: 1.5rem;
+    --space-6: 2rem;
+    --space-7: 3rem;
+    --space-8: 4rem;
+
+    /* ---------- Форма та глибина ---------- */
+    --radius-sm: 0.5rem;
+    --radius: 0.875rem;
+    --radius-full: 999px;
+
+    --shadow-sm: 0 1px 2px light-dark(rgb(15 23 42 / 0.06), rgb(0 0 0 / 0.4));
+    --shadow: 0 6px 24px light-dark(rgb(15 23 42 / 0.1), rgb(0 0 0 / 0.5));
+
+    /* ---------- Розміри ---------- */
+    --container: 72rem;
+    /* 44px — комфортна ціль для дотику пальцем */
+    --control-height: 2.75rem;
+
+    --transition: 150ms ease;
+  }
+
+  /* Ручний вибір теми перемикачем (атрибут ставить JavaScript) */
+  :root[data-theme='light'] {
+    color-scheme: light;
+  }
+
+  :root[data-theme='dark'] {
+    color-scheme: dark;
+  }
+}

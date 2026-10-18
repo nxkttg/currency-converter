@@ -1,0 +1,290 @@
+/* Компоненти, що повторюються на різних сторінках */
+@layer components {
+  /* ---------- Посилання «Перейти до основного вмісту» ---------- */
+  .skip-link {
+    position: absolute;
+    top: var(--space-2);
+    left: var(--space-4);
+    z-index: 100;
+    padding: var(--space-2) var(--space-4);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+    font-weight: 700;
+    transform: translateY(-200%);
+    transition: transform var(--transition);
+  }
+
+  .skip-link:focus {
+    transform: translateY(0);
+    color: var(--color-on-primary);
+  }
+
+  /* ---------- Картка ---------- */
+  .card {
+    padding: var(--space-5);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-sm);
+  }
+
+  /* ---------- Кнопки ---------- */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    min-height: var(--control-height);
+    padding-inline: var(--space-5);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    font-weight: 600;
+    text-decoration: none;
+    transition:
+      background-color var(--transition),
+      border-color var(--transition),
+      color var(--transition);
+  }
+
+  .btn--primary {
+    background-color: var(--color-primary);
+    color: var(--color-on-primary);
+  }
+
+  .btn--primary:hover {
+    background-color: var(--color-primary-hover);
+    color: var(--color-on-primary);
+  }
+
+  .btn--ghost {
+    background-color: transparent;
+    border-color: var(--color-border);
+    color: var(--color-text);
+  }
+
+  .btn--ghost:hover {
+    background-color: var(--color-surface-2);
+  }
+
+  /* Кругла кнопка-іконка (тема) */
+  .theme-toggle {
+    display: inline-grid;
+    place-items: center;
+    width: var(--control-height);
+    height: var(--control-height);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-full);
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    transition: background-color var(--transition);
+  }
+
+  .theme-toggle:hover,
+  .theme-toggle[aria-pressed='true'] {
+    background-color: var(--color-surface-2);
+  }
+
+  .theme-toggle[aria-pressed='true'] .theme-toggle__icon {
+    fill: currentColor;
+  }
+
+  /* ---------- Поля форм ---------- */
+  .field {
+    display: grid;
+    gap: var(--space-2);
+    align-content: start;
+  }
+
+  .field__label {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+  }
+
+  .field__input {
+    width: 100%;
+    min-height: var(--control-height);
+    padding-inline: var(--space-3);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface);
+    transition: border-color var(--transition);
+  }
+
+  .field__input:hover {
+    border-color: var(--color-text-muted);
+  }
+
+  /* Невалідне поле: атрибут aria-invalid ставить JavaScript */
+  .field__input[aria-invalid='true'] {
+    border-color: var(--color-danger);
+  }
+
+  .field__error {
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-danger);
+  }
+
+  /* ---------- Сегментований перемикач ---------- */
+  .segmented {
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: var(--space-1);
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+    background-color: var(--color-surface-2);
+  }
+
+  /* Радіокнопку ховаємо візуально, але вона лишається доступною з клавіатури */
+  .segmented input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+  }
+
+  .segmented label,
+  .segmented__btn {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.25rem;
+    padding-inline: var(--space-4);
+    border: 0;
+    border-radius: calc(var(--radius-sm) - 2px);
+    background-color: transparent;
+    font-size: var(--fs-sm);
+    font-weight: 600;
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      background-color var(--transition),
+      color var(--transition);
+  }
+
+  .segmented label:hover,
+  .segmented__btn:hover {
+    color: var(--color-text);
+  }
+
+  .segmented input:checked + label,
+  .segmented__btn[aria-pressed='true'] {
+    background-color: var(--color-surface);
+    color: var(--color-text);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .segmented input:focus-visible + label {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Стани: завантаження та помилка ---------- */
+  .status {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--space-3);
+    padding: var(--space-3) var(--space-4);
+    border-radius: var(--radius-sm);
+    font-size: var(--fs-sm);
+  }
+
+  /* Порожній контейнер статусу не займає місця */
+  .status:empty {
+    display: none;
+  }
+
+  .status--loading {
+    background-color: var(--color-surface-2);
+    color: var(--color-text-muted);
+  }
+
+  .status--error {
+    background-color: var(--color-danger-soft);
+    color: var(--color-danger);
+    font-weight: 600;
+  }
+
+  .status--error .btn {
+    margin-inline-start: auto;
+  }
+
+  .spinner {
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 2px solid currentColor;
+    border-right-color: transparent;
+    border-radius: var(--radius-full);
+    animation: spin 0.7s linear infinite;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+  /* Скелетон — сірий блок-заглушка, що «переливається» під час завантаження */
+  .skeleton {
+    display: block;
+    height: var(--skeleton-height, 1rem);
+    border-radius: var(--radius-sm);
+    background: linear-gradient(
+      90deg,
+      var(--color-surface-2) 25%,
+      var(--color-border) 37%,
+      var(--color-surface-2) 63%
+    );
+    background-size: 400% 100%;
+    animation: shimmer 1.4s ease infinite;
+  }
+
+  @keyframes shimmer {
+    from {
+      background-position: 100% 50%;
+    }
+    to {
+      background-position: 0 50%;
+    }
+  }
+
+  .empty-state {
+    padding: var(--space-5);
+    border: 1px dashed var(--color-border);
+    border-radius: var(--radius);
+    text-align: center;
+    color: var(--color-text-muted);
+  }
+
+  /* ---------- Зірочка «обране» ---------- */
+  .star-btn {
+    display: inline-grid;
+    place-items: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    border: 0;
+    border-radius: var(--radius-full);
+    background-color: transparent;
+    color: var(--color-text-muted);
+    transition: color var(--transition);
+  }
+
+  .star-btn:hover {
+    color: var(--color-accent);
+    background-color: var(--color-surface-2);
+  }
+
+  .star-btn[aria-pressed='true'] {
+    color: var(--color-accent);
+  }
+
+  .star-btn[aria-pressed='true'] svg {
+    fill: currentColor;
+  }
+
+  .fav-btn[aria-pressed='true'] {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+}

@@ -1,4 +1,15 @@
-/* Головний файл стилів. Тут імпортуватимемо всі інші CSS-файли */
-body {
-  font-family: system-ui, sans-serif;
-}
+/*
+ * Головний файл стилів «Валютник».
+ *
+ * Порядок каскадних шарів: пізніший шар ЗАВЖДИ перемагає раніший,
+ * незалежно від специфічності селекторів.
+ */
+@layer tokens, reset, base, layout, components, utilities;
+
+@import './tokens.css';
+@import './reset.css';
+@import './base.css';
+@import './layout.css';
+@import './components.css';
+@import './pages.css';
+@import './utilities.css';

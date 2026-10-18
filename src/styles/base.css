@@ -1,0 +1,71 @@
+/* Базові стилі HTML-тегів */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scrollbar-gutter: stable;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-size: var(--fs-base);
+    line-height: var(--lh-base);
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* main розтягується — футер завжди внизу навіть на короткій сторінці */
+  main {
+    flex: 1;
+  }
+
+  main:focus {
+    outline: none;
+  }
+
+  h1,
+  h2,
+  h3 {
+    line-height: var(--lh-tight);
+    text-wrap: balance;
+  }
+
+  h1 {
+    font-size: var(--fs-2xl);
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-size: var(--fs-xl);
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: var(--color-primary);
+    text-underline-offset: 0.2em;
+  }
+
+  a:hover {
+    color: var(--color-primary-hover);
+  }
+
+  /*
+   * Помітний фокус для клавіатури (WCAG 2.4.7).
+   * :focus-visible — тільки при навігації клавіатурою, не при кліку мишею.
+   */
+  :focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-primary-soft);
+  }
+}
