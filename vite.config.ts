@@ -20,5 +20,11 @@ export default defineConfig({
 
   test: {
     environment: 'jsdom',
+    coverage: {
+      provider: 'v8',
+      include: ['src/**/*.ts'],
+      exclude: ['src/**/*.test.ts', 'src/pages/**', 'src/types/**'],
+      reporter: ['text', 'html'],
+    },
   },
 });

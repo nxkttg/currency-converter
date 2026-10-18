@@ -199,6 +199,7 @@
   }
 
   .filter legend {
+    padding: 0;
     margin-bottom: var(--space-2);
   }
 
