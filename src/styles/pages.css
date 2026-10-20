@@ -428,4 +428,27 @@
     font-size: var(--fs-sm);
     color: var(--color-text-muted);
   }
+
+  .chart__canvas svg {
+    /* Дозволяємо вертикальну прокрутку пальцем, горизонтальний рух — для підказки */
+    touch-action: pan-y;
+  }
+
+  .chart__canvas svg:focus-visible {
+    outline: 3px solid var(--color-focus);
+    outline-offset: 4px;
+    border-radius: var(--radius-sm);
+  }
+
+  .chart__cursor {
+    stroke: var(--color-text-muted);
+    stroke-dasharray: 3 3;
+  }
+
+  .chart__empty {
+    display: grid;
+    place-items: center;
+    height: 100%;
+    color: var(--color-text-muted);
+  }
 }
