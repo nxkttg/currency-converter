@@ -5,6 +5,7 @@ export default defineConfig({
   // Відносні шляхи до файлів: сайт працюватиме з будь-якої адреси,
   // зокрема з GitHub Pages (nxkttg.github.io/currency-converter/)
   base: './',
+  appType: 'mpa',
 
   build: {
     rolldownOptions: {
