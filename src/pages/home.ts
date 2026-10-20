@@ -21,6 +21,7 @@ import {
   formatPercent,
   formatTime,
   getCurrencyName,
+  getTrendClass,
 } from '../utils/format';
 
 const DEFAULT_FROM = 'USD';
@@ -233,12 +234,6 @@ function createSkeletonCard(): HTMLLIElement {
       createSkeleton('1rem', '50%'),
     ]),
   ]);
-}
-
-function getTrendClass(change: number): string {
-  if (change > 0) return 'is-up';
-  if (change < 0) return 'is-down';
-  return '';
 }
 
 function createFailedCard(code: string): HTMLLIElement {

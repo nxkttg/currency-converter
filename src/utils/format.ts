@@ -81,3 +81,10 @@ export function getCurrencyName(code: string, fallback = code): string {
     return fallback;
   }
 }
+
+/** CSS-клас для кольору зміни: зелений — зростання, червоний — падіння */
+export function getTrendClass(change: number): string {
+  if (change > 0) return 'is-up';
+  if (change < 0) return 'is-down';
+  return '';
+}

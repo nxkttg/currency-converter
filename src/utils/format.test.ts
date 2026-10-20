@@ -7,6 +7,7 @@ import {
   formatPercent,
   getCurrencyName,
   getFractionDigits,
+  getTrendClass,
 } from './format';
 
 /** Intl використовує нерозривні пробіли — замінюємо їх звичайними для порівняння */
@@ -78,5 +79,15 @@ describe('getCurrencyName', () => {
 
   it('повертає запасний варіант для некоректного коду', () => {
     expect(getCurrencyName('US', 'Unknown')).toBe('Unknown');
+  });
+});
+
+describe('getTrendClass', () => {
+  it.each([
+    [0.05, 'is-up'],
+    [-0.05, 'is-down'],
+    [0, ''],
+  ])('для %d повертає "%s"', (change, expected) => {
+    expect(getTrendClass(change)).toBe(expected);
   });
 });
