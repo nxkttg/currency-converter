@@ -1,0 +1,76 @@
+# CI/CD: перевірка коду та публікація на GitHub Pages
+name: CI and Deploy
+
+# Коли запускати
+on:
+  push:
+    branches: [main] # кожен push у main — перевірка + публікація
+  pull_request: # кожен Pull Request — лише перевірка
+  workflow_dispatch: # ручний запуск кнопкою на GitHub
+
+# Мінімально необхідні права
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  # ---------- Етап 1: перевірка якості та збірка ----------
+  check:
+    name: Lint, test and build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Завантажити код репозиторію
+        uses: actions/checkout@v5
+
+      - name: Встановити Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Встановити залежності
+        run: npm ci
+
+      - name: Перевірка ESLint
+        run: npm run lint
+
+      - name: Перевірка форматування Prettier
+        run: npm run format:check
+
+      - name: Перевірка типів TypeScript
+        run: npm run typecheck
+
+      - name: Тести
+        run: npm run test:run
+
+      - name: Збірка
+        run: npm run build
+
+      - name: Підготувати сайт до публікації
+        if: github.event_name != 'pull_request'
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: dist
+
+  # ---------- Етап 2: публікація (лише для main) ----------
+  deploy:
+    name: Deploy to GitHub Pages
+    if: github.event_name != 'pull_request'
+    needs: check # запускається ЛИШЕ якщо check пройшов успішно
+    runs-on: ubuntu-latest
+
+    # Не запускати дві публікації одночасно
+    concurrency:
+      group: pages
+      cancel-in-progress: false
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Опублікувати
+        id: deployment
+        uses: actions/deploy-pages@v4
