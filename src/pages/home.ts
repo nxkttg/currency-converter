@@ -5,6 +5,7 @@
 import { getErrorMessage, getRate, getTimeSeries, isAbortError } from '../api/frankfurter';
 import { fillCurrencySelect, selectCurrency } from '../components/currency-select';
 import { createElement, getElement } from '../components/dom';
+import { createSkeleton } from '../components/skeleton';
 import { clearStatus, showError, showLoading } from '../components/status';
 import { initTheme } from '../components/theme';
 import { loadCurrencies } from '../services/currencies';
@@ -221,15 +222,6 @@ async function initCurrencies(): Promise<void> {
       () => void initCurrencies(),
     );
   }
-}
-
-// =============== ПОПУЛЯРНІ КУРСИ ===============
-
-function createSkeleton(height: string, width: string): HTMLSpanElement {
-  const skeleton = createElement('span', { className: 'skeleton' });
-  skeleton.style.setProperty('--skeleton-height', height);
-  skeleton.style.width = width;
-  return skeleton;
 }
 
 function createSkeletonCard(): HTMLLIElement {
