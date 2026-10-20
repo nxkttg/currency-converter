@@ -6,7 +6,7 @@
 import type { ApiErrorBody, Currency, Rate } from '../types/api';
 
 /** Звичайний об'єкт: не null і не масив */
-function isRecord(value: unknown): value is Record<string, unknown> {
+export function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
 }
 
