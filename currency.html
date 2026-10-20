@@ -11,6 +11,15 @@
     <meta name="theme-color" content="#0f766e" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <!-- Застосовуємо збережену тему ДО відмальовки, щоб не було «спалаху» світлої теми -->
+    <script>
+      try {
+        const theme = JSON.parse(localStorage.getItem('valiutnyk:theme'));
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {}
+    </script>
+    <link rel="stylesheet" href="/src/styles/main.css" />
+
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Валютник" />
     <meta property="og:locale" content="uk_UA" />
